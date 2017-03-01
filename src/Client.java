@@ -12,32 +12,61 @@ import java.util.Scanner;
 public class Client {
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Escribe la Operacion");
-        String operacion=sc.nextLine();
+        Scanner scr = new Scanner(System.in);
+        System.out.println("numero 1 :");
+        String num1 =scr.nextLine();
+        System.out.println("numero 2 :");
+        String num2 = scr.nextLine();
+
+        System.out.println("Escribe el numero de la operacion que quieres hacer :");
+        System.out.println("1) sumar");
+        System.out.println("2) restar");
+        System.out.println("3) multiplicar");
+        System.out.println("4) dividir");
+
+        int option = scr.nextInt();
+
+        String operacion = null;
+        switch (option)
+        {
+            case 1:
+                operacion = num1 + " " + "+" + " " + num2;
+                break;
+            case 2:
+                operacion = num1 + " " + "-" + " " + num2;
+                break;
+            case 3:
+                operacion = num1 + " " + "*" + " " + num2;
+                break;
+            case 4:
+                operacion = num1 + " " + "/" + " " + num2;
+                break;
+            default:
+                break;
+        }
+
 
 
         try {
 
-            System.out.println("Creando un cliente");
+            //Creando un cliente
             Socket cliente = new Socket();
             DatagramSocket udp = new DatagramSocket();
 
-            System.out.println("Creando una conecxion");
+            //Creando una conecxion
             InetSocketAddress addr = new InetSocketAddress("localhost", 5555);
             cliente.connect(addr);
             InputStream is = cliente.getInputStream();
             OutputStream os = cliente.getOutputStream();
 
             String mensaje = operacion;
-            System.out.println("Enviando : ");
+            //enviando
             os.write(mensaje.getBytes());
-            System.out.println("Operacion enviado");
+            //operacion enviada
 
-            System.out.println("Creando socket del cliente");
             cliente.close();
 
-            System.out.println("Terminado");
+            System.out.println("se ha guardado en el fichero (result.xml)");
 
         } catch (IOException e) {
             e.printStackTrace();

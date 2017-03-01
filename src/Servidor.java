@@ -25,6 +25,9 @@ public class Servidor {
 
             System.out.println("Aceptando conexiones");
 
+
+
+
             do {
                 Socket newSocket = serverSocket.accept();
 

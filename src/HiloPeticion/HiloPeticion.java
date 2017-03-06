@@ -34,13 +34,14 @@ public class HiloPeticion extends Thread{
         InputStream is = null;
         try {
             is = newSocket.getInputStream();
-
+            String ip = newSocket.getInetAddress().toString();
             OutputStream os = newSocket.getOutputStream();
 
             byte[] mensaje = new byte[10];
             is.read(mensaje);
 
             String[] oper = new String(mensaje).split(" ");
+
             double resultado = 0;
 
             switch (oper[1].charAt(0))
@@ -48,18 +49,22 @@ public class HiloPeticion extends Thread{
                 case '+':
                     System.out.println("resultat : ");
                     resultado = Double.valueOf(oper[0]) + Double.valueOf(oper[2]);
+
                     break;
                 case '-':
                     System.out.println("resultat : ");
                     resultado = Double.valueOf(oper[0]) - Double.valueOf(oper[2]);
+
                     break;
                 case '*':
                     System.out.println("resultat : ");
                     resultado = Double.valueOf(oper[0]) * Double.valueOf(oper[2]);
+
                     break;
                 case '/':
                     System.out.println("resultat : ");
                     resultado = Double.valueOf(oper[0]) / Double.valueOf(oper[2]);
+
                     break;
             }
             /*
@@ -69,8 +74,7 @@ public class HiloPeticion extends Thread{
             */
             System.out.println(resultado);
 
-            //crearXml(mensaje.toString(), resultado);
-			crearXml(new String(mensaje), resultado);
+			crearXml(mensaje.toString(), ip, resultado);
 
 
             newSocket.close();
@@ -81,7 +85,7 @@ public class HiloPeticion extends Thread{
         }
     }
 
-    private void crearXml(String operacion, double resultado) {
+    private void crearXml(String operacion, String Ip, double resultado) {
 
         Document document = null;
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -113,7 +117,7 @@ public class HiloPeticion extends Thread{
             //creamos un nuevo elemento. info tiene ip
             Element ip = document.createElement("Ip");
             //Ingresamos la info.
-            Text valorIp = document.createTextNode("la ip");
+            Text valorIp = document.createTextNode(Ip);
 
             //Asignamos la versión de nuestro XML
             document.setXmlVersion("1.0");
